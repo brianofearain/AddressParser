@@ -1,4 +1,4 @@
-package com.am.bt.address;
+package com.bttw.address;
 
 public class Street {
 	public String houseNum;

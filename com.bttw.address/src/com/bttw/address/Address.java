@@ -1,4 +1,4 @@
-package com.am.bt.address;
+package com.bttw.address;
 
 import java.io.Serializable;
 import javax.persistence.Column;
