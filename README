@@ -1,1 +1,9 @@
-hello world
+This snippet includes a pared down version of code actually used in my production application. 
+It should be useful as a template for Android REST consumers. 
+
+Instructions:
+1 Modify parameter passed to HttpClient in doInBackground()
+ RESTful HTTP GET call
+2 Instead of simply extracting text with
+text = getASCIIContentFromEntity(entity);
+Create parsing specific code according to use case
