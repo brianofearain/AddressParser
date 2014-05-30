@@ -1,3 +1,9 @@
+AddressParser:
+=============
+* Standardise and normalise Irish addresses
+* extension of jgeocode for irish use case
+* Useful to avoid fees when google maps api quota reached
+
 Dependencies:
 ===========
 * commons-lang-2.4.jar
