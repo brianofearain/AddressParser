@@ -1,9 +1,9 @@
-package com.bttw.address;
+package com.bttw.address.src;
 
-import static com.bttw.address.Data.getCOUNTIES_MAP;
-import static com.bttw.address.Data.getDIRECTIONAL_MAP;
-import static com.bttw.address.Data.getSTREET_TYPE_MAP;
-import static com.bttw.address.Data.getUNIT_MAP;
+import static com.bttw.address.src.Data.getCOUNTIES_MAP;
+import static com.bttw.address.src.Data.getDIRECTIONAL_MAP;
+import static com.bttw.address.src.Data.getSTREET_TYPE_MAP;
+import static com.bttw.address.src.Data.getUNIT_MAP;
 
 import java.util.Arrays;
 import java.util.Collection;

@@ -1,4 +1,4 @@
-package com.bttw.address;
+package com.bttw.address.src;
 
 public class Street {
 	public String houseNum;

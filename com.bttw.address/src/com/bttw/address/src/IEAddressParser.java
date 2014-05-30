@@ -1,15 +1,17 @@
-package com.bttw.address;
-import static com.bttw.address.AddressPartsEnum.COUNTY;
-import static com.bttw.address.AddressPartsEnum.LINE2;
-import static com.bttw.address.AddressPartsEnum.PREDIR;
-import static com.bttw.address.AddressPartsEnum.STREET;
-import static com.bttw.address.AddressPartsEnum.TYPE;
-import static com.bttw.address.AddressPartsEnum.valueOf;
-import static com.bttw.address.AddressRegexLibrary.P_CORNER;
-import static com.bttw.address.AddressRegexLibrary.P_CSZ;
-import static com.bttw.address.AddressRegexLibrary.P_INTERSECTION;
-import static com.bttw.address.AddressRegexLibrary.P_STREET_ADDRESS;
+package com.bttw.address.src;
 
+
+
+import static com.bttw.address.src.AddressPartsEnum.COUNTY;
+import static com.bttw.address.src.AddressPartsEnum.LINE2;
+import static com.bttw.address.src.AddressPartsEnum.PREDIR;
+import static com.bttw.address.src.AddressPartsEnum.STREET;
+import static com.bttw.address.src.AddressPartsEnum.TYPE;
+import static com.bttw.address.src.AddressPartsEnum.valueOf;
+import static com.bttw.address.src.AddressRegexLibrary.P_CORNER;
+import static com.bttw.address.src.AddressRegexLibrary.P_CSZ;
+import static com.bttw.address.src.AddressRegexLibrary.P_INTERSECTION;
+import static com.bttw.address.src.AddressRegexLibrary.P_STREET_ADDRESS;
 
 import java.util.EnumMap;
 import java.util.HashSet;
@@ -18,7 +20,7 @@ import java.util.Set;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import com.bttw.address.AddressPartsEnum;
+import com.bttw.address.src.AddressPartsEnum;
 
 public class IEAddressParser{
 
@@ -30,24 +32,6 @@ public class IEAddressParser{
   private static final Pattern STREET_TYPES = Pattern.compile(RegexLibrary.STREET_DESIGNATOR);
   private static final Pattern COUNTIES = Pattern.compile(RegexLibrary.COUNTIES);
   
-
-  
-  public static void main(String[] args){
-	  String addr1 = "123 millmount road, drogheda, Meath 12345";
-	  Map<AddressPartsEnum, String> addressComponents =  IEAddressParser.parseRaw(addr1);
-	  
-	 String zip = addressComponents.get(AddressPartsEnum.ZIP);
-     String city = addressComponents.get(AddressPartsEnum.CITY);
-     String county = addressComponents.get(AddressPartsEnum.COUNTY);
-     String number = addressComponents.get(AddressPartsEnum.NUMBER);
-     String street = addressComponents.get(AddressPartsEnum.STREET);
-     System.out.println(zip);
-     System.out.println(city);  
-     System.out.println(county);
-     System.out.println(number);
-     System.out.println(street);
-  }
-  
   
   /**
    * Parses a raw address string 
@@ -55,7 +39,7 @@ public class IEAddressParser{
    * @param autoCorrectStateSpelling swith on/off auto correction on state mis-spelling
    * @return a map of parsed address components
    */
-  private static Map<AddressPartsEnum, String> parseRaw(String rawAddr){
+  public static Map<AddressPartsEnum, String> parseRaw(String rawAddr){
     rawAddr = tidyString(rawAddr);
     
     Matcher m = STREET_ADDRESS.matcher(rawAddr);
@@ -130,6 +114,7 @@ public class IEAddressParser{
   
   // needs to be more documented here
   private static Pattern STREET_DESIGNATOR_CHECK = Pattern.compile("\\b(?i:(?:"+RegexLibrary.STREET_DESIGNATOR+"))\\b");
+ 
   private static String designatorConfusingCitiesCorrection(Map<AddressPartsEnum, String> parsedLocation, String input){
     String street = parsedLocation.get(AddressPartsEnum.STREET);
     String type = parsedLocation.get(AddressPartsEnum.TYPE);
@@ -144,26 +129,26 @@ public class IEAddressParser{
 				  parsedstate = parsedcity;
 			  }
 		  }
-		  String normalizedState = AddressStandardizer.normalizeState(parsedstate.toUpperCase());
+	//	  String normalizedState = AddressStandardizer.normalizeState(parsedstate.toUpperCase());
 		  String inputUpper =  input.toUpperCase();
 		  String ret = null;
 		  Set<String> stateSet = new HashSet<String>();
-		  if(normalizedState != null){
-			  stateSet.add(normalizedState);
+		  if(parsedstate != null){
+			  stateSet.add(parsedstate);
 		  }else{ //if no state in put, this needs to work much harder
-			  stateSet.addAll(SpecialData.C_MAP.keySet());
+			 // stateSet.addAll(SpecialData.C_MAP.keySet());
 		  }
 		  int stateIdx = parsedstate == null ? input.length() : input.lastIndexOf(parsedstate);
 		  for(String state : stateSet){
-		      for(String s : SpecialData.C_MAP.get(state)){
+		    //  for(String s : SpecialData.C_MAP.get(state)){
 			        int idx = -1;
-			        if((idx =inputUpper.lastIndexOf(s))!=-1){ //and the input has one of the city names that can confuse the parser
+			  //      if((idx =inputUpper.lastIndexOf(s))!=-1){ //and the input has one of the city names that can confuse the parser
 			          //this almost guaranteed to break the parser, help the parser by putting a comma separator before the city
-			        	if(idx+s.length() >= stateIdx -2){
+			    //    	if(idx+s.length() >= stateIdx -2){
 			        		return input.substring(0, idx)+","+input.substring(idx);
-			        	}
-			        }
-			      }
+			      //  	}
+			        //}
+			    //  }
 		  }
 	      return ret;
 	  }		

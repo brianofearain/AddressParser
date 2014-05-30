@@ -1,4 +1,4 @@
-package com.bttw.address;
+package com.bttw.address.src;
 
 import java.io.Serializable;
 import javax.persistence.Column;
@@ -22,7 +22,7 @@ public class Address implements Serializable {
 
 	@Column(length = 150)
 	public String getStrAddress() {
-		return address;
+		return strAddress.toString();
 	}
 
 	@Column(nullable = false, length = 50)
